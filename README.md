@@ -1,12 +1,15 @@
-# DESCRIPTIVE-TITLE Solo Project 
-### A repo made to test Semantic-UI-React's NPM that has a popup modal that display's necessary info.
+# Princeton Data Structures and Algorithms Course Solo Project
+
+### A repo for the DSA course from Princeton University! Documenting fundamental concepts, advanced algorithms, and their implementations in Java.
+
 
 ### Things learned:
-* Learned how to make functionality for className "active" in navs and tabs
-* Sharpened React JSX and CSS Flexbox skills.
-* Learned how to combine two personal Solo Projects to make one dynamic project!
+* Gain insights into the implementation of classic algorithms
+* Fundamentals: Arrays, Linked Lists, Stacks, Queues
+* Code < Algorithms! (If used properly it can be the best thing about your program)
 
-### Overall, a productive project which allowed for better understanding of Pop Up Modals.
+### Overall, a productive project which allowed for better understanding of Algorithms and truly stretched my legs with Java on this course
+
 
 ## Preview of work done:
 ### Image of Pop-up-Bar displaying dynamic info and picures
@@ -51,3 +54,6 @@ https://react.semantic-ui.com/usage
 `
 https://www.npmjs.com/package/react-alice-carousel
 `
+
+### Princeton's Course can be accessed here: [link](https://www.coursera.org/learn/algorithms-part1)
+
