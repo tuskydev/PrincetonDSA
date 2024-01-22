@@ -5,16 +5,20 @@ import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 
-public class Percolation {
+public class OldPercolation {
   private Object[][][] grid;
   private Object[][][] topNode;
   private Object[][][] bottomNode;
 
-  // creates n-by-n grid, with all sites initially blocked
-  public Percolation(int n) {
+  private void checkNumForErrors(int n) {
     if (n <= 0) {
-      throw new IllegalArgumentException("Grid size must be greater than 0");
+      throw new IllegalArgumentException("Grid size, or row/col number is too small. Try Again!");
     }
+  }
+
+  // creates n-by-n grid, with all sites initially blocked
+  public OldPercolation(int n) {
+    checkNumForErrors(n);
 
     // Virtual Top Node
     topNode = new Object[1][1][3];
@@ -43,30 +47,17 @@ public class Percolation {
 
   // opens the site (row, col) if it is not open already
   public void open(int row, int col) {
-    row--;
-    col--;
-
-    if (row > grid[0].length) {
-      throw new IllegalArgumentException("ROW outside prescribed range");
-    }
-    if (col > grid[0].length) {
-      throw new IllegalArgumentException("COL outside prescribed range");
-    }
+    checkNumForErrors(row--);
+    checkNumForErrors(col--);
 
     grid[row][col][0] = true;
+    System.out.println(grid[row][col][0] = true);
   }
 
   // is the site (row, col) open?
   public boolean isOpen(int row, int col) {
-    row--;
-    col--;
-
-    if (row > grid[0].length) {
-      throw new IllegalArgumentException("ROW outside prescribed range");
-    }
-    if (col > grid[0].length) {
-      throw new IllegalArgumentException("COL outside prescribed range");
-    }
+    checkNumForErrors(row--);
+    checkNumForErrors(col--);
 
     if ((boolean) grid[row][col][0] == true) {
       return true;
@@ -77,15 +68,8 @@ public class Percolation {
 
   // is the site (row, col) full?
   public boolean isFull(int row, int col) {
-    row--;
-    col--;
-
-    if (row > grid[0].length) {
-      throw new IllegalArgumentException("ROW outside prescribed range");
-    }
-    if (col > grid[0].length) {
-      throw new IllegalArgumentException("COL outside prescribed range");
-    }
+    checkNumForErrors(row--);
+    checkNumForErrors(col--);
 
     if ((int) grid[row][col][2] == -1) {
       return true;
@@ -120,6 +104,6 @@ public class Percolation {
 
   // test client (optional)
   public static void main(String[] args) {
-    Percolation perc = new Percolation(StdIn.readInt());
+    OldPercolation perc = new OldPercolation(StdIn.readInt());
   }
 }
