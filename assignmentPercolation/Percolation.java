@@ -7,12 +7,26 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
   private Object[][][] grid;
+  private Object[][][] topNode;
+  private Object[][][] bottomNode;
 
   // creates n-by-n grid, with all sites initially blocked
   public Percolation(int n) {
     if (n <= 0) {
       throw new IllegalArgumentException("Grid size must be greater than 0");
     }
+
+    // Virtual Top Node
+    topNode = new Object[1][1][3];
+    topNode[0][0][0] = true; // Flow is set false
+    topNode[0][0][1] = -1;   // Value of cell
+    topNode[0][0][2] = -1;   // Root value (starts rooted to itself)
+
+    // Virtual Bottom Node
+    bottomNode = new Object[1][1][3];
+    bottomNode[0][0][0] = false; // Flow is set false
+    bottomNode[0][0][1] = n;     // Value of cell
+    bottomNode[0][0][2] = n;     // Root value (starts rooted to itself)
 
     grid = new Object[n][n][3];
     int counter = 0;
@@ -29,6 +43,9 @@ public class Percolation {
 
   // opens the site (row, col) if it is not open already
   public void open(int row, int col) {
+    row--;
+    col--;
+
     if (row > grid[0].length) {
       throw new IllegalArgumentException("ROW outside prescribed range");
     }
@@ -36,38 +53,70 @@ public class Percolation {
       throw new IllegalArgumentException("COL outside prescribed range");
     }
 
-
+    grid[row][col][0] = true;
   }
 
-  // // is the site (row, col) open?
-  // public boolean isOpen(int row, int col) {
-  //   if (row > grid[0].length) {
-  //     throw new IllegalArgumentException("ROW outside prescribed range");
-  //   }
-  //   if (col > grid[0].length) {
-  //     throw new IllegalArgumentException("COL outside prescribed range");
-  //   }
-  // }
+  // is the site (row, col) open?
+  public boolean isOpen(int row, int col) {
+    row--;
+    col--;
 
-  // // is the site (row, col) full?
-  // public boolean isFull(int row, int col) {
-  //   if (row > grid[0].length) {
-  //     throw new IllegalArgumentException("ROW outside prescribed range");
-  //   }
-  //   if (col > grid[0].length) {
-  //     throw new IllegalArgumentException("COL outside prescribed range");
-  //   }
-  // }
+    if (row > grid[0].length) {
+      throw new IllegalArgumentException("ROW outside prescribed range");
+    }
+    if (col > grid[0].length) {
+      throw new IllegalArgumentException("COL outside prescribed range");
+    }
 
-  // // returns the number of open sites
-  // public int numberOfOpenSites() {
+    if ((boolean) grid[row][col][0] == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  // }
+  // is the site (row, col) full?
+  public boolean isFull(int row, int col) {
+    row--;
+    col--;
 
-  // // does the system percolate?
-  // public boolean percolates() {
+    if (row > grid[0].length) {
+      throw new IllegalArgumentException("ROW outside prescribed range");
+    }
+    if (col > grid[0].length) {
+      throw new IllegalArgumentException("COL outside prescribed range");
+    }
 
-  // }
+    if ((int) grid[row][col][2] == -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // returns the number of open sites
+  public int numberOfOpenSites() {
+    int counter = 0;
+
+    for (int i = 0; i < grid[0].length; i++) {
+      for (int e = 0; e < grid[0].length; e++) {
+        if ((boolean) grid[i][e][0]) {
+          counter++;
+        }
+      }
+    }
+
+    return counter;
+  }
+
+  // does the system percolate?
+  public boolean percolates() {
+    if ((int) bottomNode[0][0][2] == -1) {
+      return true;
+    } else{
+      return false;
+    }
+  }
 
   // test client (optional)
   public static void main(String[] args) {
