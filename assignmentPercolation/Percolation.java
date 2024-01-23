@@ -35,8 +35,6 @@ public class Percolation {
     openSites = 0;
     opened = new boolean[size][size];
     qf = new WeightedQuickUnionUF(size * size + 2);
-
-    System.out.println(qf.count());
   }
 
   // opens the site (row, col) if it is not open already
@@ -61,7 +59,14 @@ public class Percolation {
 
   // is the site (row, col) full?
   public boolean isFull(int row, int col) {
-    qf.find();
+    checkNumForErrors(row--, false);
+    checkNumForErrors(col--, false);
+
+    if (qf.find(xyTo1D(row, col)) == top) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // // returns the number of open sites
