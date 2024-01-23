@@ -43,6 +43,7 @@ public class Percolation {
     checkNumForErrors(col--, false);
 
     opened[row][col] = true;
+    openSites++;
   }
 
   // is the site (row, col) open?
@@ -69,15 +70,19 @@ public class Percolation {
     }
   }
 
-  // // returns the number of open sites
-  // public int numberOfOpenSites() {
+  // returns the number of open sites
+  public int numberOfOpenSites() {
+    return openSites;
+  }
 
-  // }
-
-  // // does the system percolate?
-  // public boolean percolates() {
-
-  // }
+  // does the system percolate?
+  public boolean percolates() {
+    if (qf.find(bottom) == top) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   // test client (optional)
   public static void main(String[] args) {
