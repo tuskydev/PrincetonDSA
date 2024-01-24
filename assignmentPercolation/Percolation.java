@@ -53,15 +53,22 @@ public class Percolation {
     }
 
     // Checking & Connecting Cells if open
-    if (isOpen(row - 1, col)) {   // Top
+    try {   // Top
+      isOpen(row - 1, col);
       qf.union(xyTo1D(row, col), xyTo1D(row - 1, col));
-    } else if (isOpen(row + 1, col)) {   // Bottom
+    } catch (Exception e) {}
+    try {   // Bottom
+      isOpen(row + 1, col);
       qf.union(xyTo1D(row, col), xyTo1D(row + 1, col));
-    } else if (isOpen(row, col - 1)) {   // Left
+    } catch (Exception e) {}
+    try {   // Left
+      isOpen(row, col - 1);
       qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
-    } else if (isOpen(row, col + 1)) {   // Right
+    } catch (Exception e) {}
+    try {   // Right
+      isOpen(row, col + 1);
       qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
-    }
+    } catch (Exception e) {}
   }
 
   // is the site (row, col) open?
@@ -105,5 +112,9 @@ public class Percolation {
   // test client (optional)
   public static void main(String[] args) {
     Percolation perc = new Percolation(StdIn.readInt());
+    perc.open(1, 1);
+    perc.open(1, 2);
+    // perc.qf.find(1, 1);
+    // perc.qf.find(1, 2);
   }
 }
