@@ -44,6 +44,24 @@ public class Percolation {
 
     opened[row][col] = true;
     openSites++;
+
+    // Connecting Top and Bottom Virtual Cells if in first/last row
+    if (row == 0) {
+      qf.union(top, xyTo1D(row, col));
+    } else if (row == size - 1) {
+      qf.union(bottom, xyTo1D(row, col));
+    }
+
+    // Checking & Connecting Cells if open
+    if (isOpen(row - 1, col)) {   // Top
+      qf.union(xyTo1D(row, col), xyTo1D(row - 1, col));
+    } else if (isOpen(row + 1, col)) {   // Bottom
+      qf.union(xyTo1D(row, col), xyTo1D(row + 1, col));
+    } else if (isOpen(row, col - 1)) {   // Left
+      qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
+    } else if (isOpen(row, col + 1)) {   // Right
+      qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
+    }
   }
 
   // is the site (row, col) open?
