@@ -47,28 +47,28 @@ public class Percolation {
 
     // Connecting Top and Bottom Virtual Cells if in first/last row
     if (row == 0) {
-      qf.union(top, xyTo1D(row, col));
+      qf.union(xyTo1D(row, col), top);
     } else if (row == size - 1) {
-      qf.union(bottom, xyTo1D(row, col));
+      System.out.println("AHHHHHHHHHHHHHHHHHHHH");
+      qf.union(xyTo1D(row, col), bottom);
     }
 
     // Checking & Connecting Cells if open
-    try {   // Top
-      isOpen(row - 1, col);
-      qf.union(xyTo1D(row, col), xyTo1D(row - 1, col));
-    } catch (Exception e) {}
-    try {   // Bottom
-      isOpen(row + 1, col);
-      qf.union(xyTo1D(row, col), xyTo1D(row + 1, col));
-    } catch (Exception e) {}
-    try {   // Left
-      isOpen(row, col - 1);
-      qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
-    } catch (Exception e) {}
-    try {   // Right
-      isOpen(row, col + 1);
-      qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
-    } catch (Exception e) {}
+    if (row > 0 && isOpen(row - 1, col)) {                  // Top
+      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+    }
+
+    if (row < size - 1 && isOpen(row + 1, col)) {           // Bottom
+      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+    }
+
+    if (col > 0 && isOpen(row, col - 1)) {                  // Left
+      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+    }
+
+    if (col < size - 1 && isOpen(row, col + 1)) {           // Right
+      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+    }
   }
 
   // is the site (row, col) open?
@@ -102,7 +102,9 @@ public class Percolation {
 
   // does the system percolate?
   public boolean percolates() {
-    if (qf.find(bottom) == top) {
+    System.out.println(qf.find(bottom));
+    System.out.println(qf.find(top));
+    if (qf.find(bottom) == qf.find(top)) {
       return true;
     } else {
       return false;
@@ -112,9 +114,11 @@ public class Percolation {
   // test client (optional)
   public static void main(String[] args) {
     Percolation perc = new Percolation(StdIn.readInt());
-    perc.open(1, 1);
-    perc.open(1, 2);
-    // perc.qf.find(1, 1);
-    // perc.qf.find(1, 2);
+
+    while (!perc.percolates()) {
+      perc.open(StdIn.readInt(), StdIn.readInt());
+    }
+
+    System.out.println("Hello world!");
   }
 }
