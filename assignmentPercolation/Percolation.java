@@ -59,15 +59,15 @@ public class Percolation {
     }
 
     if (row < size - 1 && isOpen(row + 1, col)) {           // Bottom
-      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+      qf.union(xyTo1D(row + 1, col), xyTo1D(row, col));
     }
 
     if (col > 1 && isOpen(row, col - 1)) {                  // Left
-      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+      qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
     }
 
     if (col < size - 1 && isOpen(row, col + 1)) {           // Right
-      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
+      qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
     }
   }
 
