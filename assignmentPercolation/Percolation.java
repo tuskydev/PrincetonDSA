@@ -22,7 +22,7 @@ public class Percolation {
   }
 
   private int xyTo1D(int x, int y) {
-    return size * x + y + 1;
+    return (y - 1) * size + x;
   }
 
   // creates n-by-n grid, with all sites initially blocked
@@ -39,14 +39,14 @@ public class Percolation {
 
   // opens the site (row, col) if it is not open already
   public void open(int row, int col) {
-    checkNumForErrors(row--, false);
-    checkNumForErrors(col--, false);
+    checkNumForErrors(row - 1, false);
+    checkNumForErrors(col - 1, false);
 
     opened[row][col] = true;
     openSites++;
 
     // Connecting Top and Bottom Virtual Cells if in first/last row
-    if (row == 0) {
+    if (row == 1) {
       qf.union(xyTo1D(row, col), top);
     } else if (row == size - 1) {
       System.out.println("AHHHHHHHHHHHHHHHHHHHH");
@@ -54,7 +54,7 @@ public class Percolation {
     }
 
     // Checking & Connecting Cells if open
-    if (row > 0 && isOpen(row - 1, col)) {                  // Top
+    if (row > 1 && isOpen(row - 1, col)) {                  // Top
       qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
     }
 
@@ -62,7 +62,7 @@ public class Percolation {
       qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
     }
 
-    if (col > 0 && isOpen(row, col - 1)) {                  // Left
+    if (col > 1 && isOpen(row, col - 1)) {                  // Left
       qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
     }
 
