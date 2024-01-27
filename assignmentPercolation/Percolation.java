@@ -16,13 +16,14 @@ public class Percolation {
   private void checkNumForErrors(int n, boolean beginning) {
     if (beginning && n <= 0) {
       throw new IllegalArgumentException("Grid size must be greater than 0.");
-    } else if (!beginning && n > size || !beginning && n <= 0) {
+    } else if (!beginning && n >= size || !beginning && n < 0) {
       throw new IllegalArgumentException("Row and Columns input too low/high!");
     }
   }
 
   private int xyTo1D(int x, int y) {
-    return (y - 1) * size + x;
+    System.out.println((x - 1) * size + y + " !!!");
+    return (x - 1) * size + y;
   }
 
   // creates n-by-n grid, with all sites initially blocked
@@ -42,41 +43,49 @@ public class Percolation {
     checkNumForErrors(row - 1, false);
     checkNumForErrors(col - 1, false);
 
-    opened[row][col] = true;
-    openSites++;
+    if (!isOpen(row, col)) {
+      opened[row - 1][col - 1] = true;
+      openSites++;
+    }
 
     // Connecting Top and Bottom Virtual Cells if in first/last row
-    if (row == 1) {
+    if (col == 1) {
+      System.out.println("eeeee");
       qf.union(xyTo1D(row, col), top);
-    } else if (row == size - 1) {
+    } else if (col == size) {
       System.out.println("AHHHHHHHHHHHHHHHHHHHH");
       qf.union(xyTo1D(row, col), bottom);
     }
 
     // Checking & Connecting Cells if open
-    if (row > 1 && isOpen(row - 1, col)) {                  // Top
-      qf.union(xyTo1D(row - 1, col), xyTo1D(row, col));
-    }
-
-    if (row < size - 1 && isOpen(row + 1, col)) {           // Bottom
-      qf.union(xyTo1D(row + 1, col), xyTo1D(row, col));
-    }
-
-    if (col > 1 && isOpen(row, col - 1)) {                  // Left
+    if (col > 1 && isOpen(row, col - 1)) {                  // Top
+      System.out.println("TOP!! ");
       qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
     }
 
-    if (col < size - 1 && isOpen(row, col + 1)) {           // Right
-      qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
-    }
+    // if (row < size - 1 && isOpen(row + 1, col)) {           // Bottom
+    //   System.out.println("BOTTOM!! ");
+    //   qf.union(xyTo1D(row + 1, col), xyTo1D(row, col));
+    // }
+
+    // if (col > 1 && isOpen(row, col - 1)) {                  // Left
+    //   System.out.println("LEFT!! ");
+    //   qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
+    // }
+
+    // if (col < size - 1 && isOpen(row, col + 1)) {           // Right
+    //   System.out.println("RIGHT!! ");
+    //   qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
+    // }
+
   }
 
   // is the site (row, col) open?
   public boolean isOpen(int row, int col) {
-    checkNumForErrors(row--, false);
-    checkNumForErrors(col--, false);
+    checkNumForErrors(row - 1, false);
+    checkNumForErrors(col - 1, false);
 
-    if (opened[row][col]) {
+    if (opened[row - 1][col - 1]) {
       return true;
     } else{
       return false;
@@ -85,8 +94,8 @@ public class Percolation {
 
   // is the site (row, col) full?
   public boolean isFull(int row, int col) {
-    checkNumForErrors(row--, false);
-    checkNumForErrors(col--, false);
+    checkNumForErrors(row - 1, false);
+    checkNumForErrors(col - 1, false);
 
     if (qf.find(xyTo1D(row, col)) == top) {
       return true;
@@ -116,6 +125,8 @@ public class Percolation {
     Percolation perc = new Percolation(StdIn.readInt());
 
     while (!perc.percolates()) {
+      System.out.println("             ");
+      System.out.println("Number of open sites: " + perc.numberOfOpenSites());
       perc.open(StdIn.readInt(), StdIn.readInt());
     }
 
