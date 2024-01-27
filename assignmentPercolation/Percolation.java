@@ -22,7 +22,6 @@ public class Percolation {
   }
 
   private int xyTo1D(int x, int y) {
-    System.out.println((x - 1) * size + y + " !!!");
     return (x - 1) * size + y;
   }
 
@@ -50,34 +49,27 @@ public class Percolation {
 
     // Connecting Top and Bottom Virtual Cells if in first/last row
     if (col == 1) {
-      System.out.println("eeeee");
       qf.union(xyTo1D(row, col), top);
     } else if (col == size) {
-      System.out.println("AHHHHHHHHHHHHHHHHHHHH");
       qf.union(xyTo1D(row, col), bottom);
     }
 
     // Checking & Connecting Cells if open
-    if (col > 1 && isOpen(row, col - 1)) {                  // Top
-      System.out.println("TOP!! ");
+    if (col > 1 && isOpen(row, col - 1)) {                      // Top
       qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
     }
 
-    // if (row < size - 1 && isOpen(row + 1, col)) {           // Bottom
-    //   System.out.println("BOTTOM!! ");
-    //   qf.union(xyTo1D(row + 1, col), xyTo1D(row, col));
-    // }
+    if (col < size && isOpen(row, col + 1)) {                   // Bottom
+      qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
+    }
 
-    // if (col > 1 && isOpen(row, col - 1)) {                  // Left
-    //   System.out.println("LEFT!! ");
-    //   qf.union(xyTo1D(row, col), xyTo1D(row, col - 1));
-    // }
+    if (row > 1 && isOpen(row - 1, col)) {                      // Left
+      qf.union(xyTo1D(row, col), xyTo1D(row - 1, col));
+    }
 
-    // if (col < size - 1 && isOpen(row, col + 1)) {           // Right
-    //   System.out.println("RIGHT!! ");
-    //   qf.union(xyTo1D(row, col), xyTo1D(row, col + 1));
-    // }
-
+    if (row < size && isOpen(row + 1, col)) {               // Right
+      qf.union(xyTo1D(row, col), xyTo1D(row + 1, col));
+    }
   }
 
   // is the site (row, col) open?
@@ -111,8 +103,6 @@ public class Percolation {
 
   // does the system percolate?
   public boolean percolates() {
-    System.out.println(qf.find(bottom));
-    System.out.println(qf.find(top));
     if (qf.find(bottom) == qf.find(top)) {
       return true;
     } else {
@@ -126,7 +116,6 @@ public class Percolation {
 
     while (!perc.percolates()) {
       System.out.println("             ");
-      System.out.println("Number of open sites: " + perc.numberOfOpenSites());
       perc.open(StdIn.readInt(), StdIn.readInt());
     }
 
