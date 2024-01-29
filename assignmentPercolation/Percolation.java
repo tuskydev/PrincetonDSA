@@ -115,7 +115,6 @@ public class Percolation {
     Percolation perc = new Percolation(StdIn.readInt());
 
     while (!perc.percolates()) {
-      System.out.println("             ");
       perc.open(StdIn.readInt(), StdIn.readInt());
     }
 
