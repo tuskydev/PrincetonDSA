@@ -77,11 +77,7 @@ public class Percolation {
     checkNumForErrors(row - 1, false);
     checkNumForErrors(col - 1, false);
 
-    if (opened[row - 1][col - 1]) {
-      return true;
-    } else{
-      return false;
-    }
+    return opened[row - 1][col - 1];
   }
 
   // is the site (row, col) full?
@@ -89,11 +85,7 @@ public class Percolation {
     checkNumForErrors(row - 1, false);
     checkNumForErrors(col - 1, false);
 
-    if (qf.find(xyTo1D(row, col)) == top) {
-      return true;
-    } else {
-      return false;
-    }
+    return qf.find(xyTo1D(row, col)) == top;
   }
 
   // returns the number of open sites
@@ -103,19 +95,15 @@ public class Percolation {
 
   // does the system percolate?
   public boolean percolates() {
-    if (qf.find(bottom) == qf.find(top)) {
-      return true;
-    } else {
-      return false;
-    }
+    return qf.find(bottom) == qf.find(top);
   }
 
   // test client (optional)
   public static void main(String[] args) {
-    Percolation perc = new Percolation(StdIn.readInt());
+    Percolation originalPerc = new Percolation(StdIn.readInt());
 
-    while (!perc.percolates()) {
-      perc.open(StdIn.readInt(), StdIn.readInt());
+    while (!originalPerc.percolates()) {
+      originalPerc.open(StdIn.readInt(), StdIn.readInt());
     }
 
     System.out.println("Hello world!");
